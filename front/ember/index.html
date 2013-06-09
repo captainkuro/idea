@@ -2,16 +2,32 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Ember Starter Kit</title>
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/style.css">
+<title>Idea</title>
+  <link rel="stylesheet" href="../../common/css/normalize.css">
+  <link rel="stylesheet" href="../../common/css/foundation.min.css">
+  <link rel="stylesheet" href="../../common/css/style.css">
 </head>
-<body>
+<body class="antialiased">
 
   <script type="text/x-handlebars">
-    <h2>Welcome to Ember.js</h2>
+    <nav class="top-bar">
+      <ul class="title-area">
+        <!-- Title Area -->
+        <li class="name">
+          <h1>{{#linkTo "index"}}Idea{{/linkTo}}</h1>
+        </li>
+      </ul>
 
-    {{outlet}}
+      <section class="top-bar-section">
+        <!-- Right Nav Section -->
+        <ul class="right">
+          <li class="divider hide-for-small"></li>
+          <li>{{#linkTo "logout"}}Logout{{/linkTo}}</li>
+        </ul>
+      </section>
+    </nav>
+
+    {{outlet}} 
   </script>
 
   <script type="text/x-handlebars" data-template-name="index">
@@ -22,10 +38,22 @@
     </ul>
   </script>
 
-  <script src="js/libs/jquery-1.9.1.js"></script>
-  <script src="js/libs/handlebars-1.0.0-rc.4.js"></script>
-  <script src="js/libs/ember-1.0.0-rc.5.js"></script>
+  <script type="text/x-handlebars" data-template-name="login">
+
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="home">
+  </script>
+
+  <script src="../../common/js/custom.modernizr.js"></script>
+  <script src="../../common/js/jquery-2.0.2.min.js"></script>
+  <script src="../../common/js/foundation.min.js"></script>
+  <script src="../../common/js/handlebars-1.0.0-rc.4.js"></script>
+  <script src="js/ember-1.0.0-rc.5.js"></script>
   <script src="js/app.js"></script>
+  <script>
+    $(document).foundation();
+  </script>
 
 </body>
 </html>
