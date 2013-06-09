@@ -1,6 +1,7 @@
 (function(global) {
 
-Idea = Ember.Application.create();
+var Idea = Ember.Application.create(),
+  $ = Ember.$;
 
 // ROUTING
 Idea.Router.map(function() {
@@ -13,7 +14,7 @@ Idea.Router.map(function() {
 
 // GLOBAL VARIABLES
 Idea.Config = Ember.Object.create({
-  baseUrl: 'http://localhost/idea/back/laravel'
+  baseUrl: 'http://localhost/idea/back/laravel/public'
 });
 
 Idea.CurrentUser = Ember.Object.create({
@@ -28,6 +29,25 @@ Idea.CurrentUser = Ember.Object.create({
     this.set('password', '');
     this.set('name', '');
     this.set('isLoggedIn', false);
+  }
+});
+
+Idea.ParentController = Ember.Controller.extend({
+  user: Idea.CurrentUser,
+
+  handleResponse: function(data, success, error) {
+    switch (data.status) {
+      case 'Ok':
+        success();
+        break;
+      case 'Error':
+        error();
+        break;
+      default:
+      case 'Logout':
+        this.transitionToRoute('logout');
+        break;
+    }
   }
 });
 
@@ -50,11 +70,11 @@ Idea.IndexRoute = Ember.Route.extend({
 // Route: Logout
 Idea.LogoutRoute = Ember.Route.extend({
   redirect: function(model) {
+    var route = this;
     $.get(Idea.Config.baseUrl + '/logout', function(data, status, xhr) {
-
+      Idea.CurrentUser.reset();
+      route.transitionTo('login');
     });
-    Idea.CurrentUser.reset();
-    this.transitionTo('login');
   }
 });
 
@@ -67,9 +87,7 @@ Idea.LoginRoute = Ember.Route.extend({
   }
 });
 
-Idea.LoginController = Ember.Controller.extend({
-  user: Idea.CurrentUser,
-  init: function(){console.log('init');},
+Idea.LoginController = Idea.ParentController.extend({
   doLogin: function() {
     // debug
     this.user.set('isLoggedIn', true);
@@ -93,9 +111,7 @@ Idea.RegisterRoute = Ember.Route.extend({
   }
 });
 
-Idea.RegisterController = Ember.Controller.extend({
-  user: Idea.CurrentUser,
-
+Idea.RegisterController = Idea.ParentController.extend({
   doRegister: function() {
     $.post(Idea.Config.baseUrl + '/register', {
       username: this.user.get('username'),
@@ -116,8 +132,8 @@ Idea.HomeRoute = Ember.Route.extend({
   }
 });
 
-Idea.HomeController = Ember.Controller.extend({
-  user: Idea.CurrentUser,
+Idea.HomeController = Idea.ParentController.extend({
+  
 });
 
 global.Idea = Idea;

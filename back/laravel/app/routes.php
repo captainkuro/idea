@@ -23,15 +23,33 @@ Route::get('/', function()
 // APIs
 Route::post('/register', function()
 {
-
+	$validator = new \Idea\Validator\Registration(Input::all());
+	if ($validator->valid())
+	{
+		// @TODO save to database
+		return Response::json(\Idea\Helper::okReply('You have been registered'));
+	} 
+	else 
+	{
+		return Response::json(\Idea\Helper::errorReply($validator->messages()));
+	}
 });
 
 Route::post('/login', function()
 {
-
+	$validator = new \Idea\Validator\Login(Input::all());
+	if ($validator->valid())
+	{
+		// @TODO set the session
+		return Response::json(\Idea\Helper::okReply('You have been logged in'));
+	} 
+	else 
+	{
+		return Response::json(\Idea\Helper::errorReply($validator->messages()));
+	}
 });
 
 Route::get('/logout', function()
 {
-
+	return Response::json(\Idea\Helper::okReply('You have been logged out'));
 });
