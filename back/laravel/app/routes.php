@@ -13,10 +13,10 @@
 
 Route::get('/', function()
 {
-	$a = new \Idea\Model\User\Sql;
-	print_r($a);
-	$b = \Idea\Model\User::factory();
-	print_r($b);
+	$user_collection = \Idea\Collection\User::factory();
+	print_r($user_collection);
+	$user_record = new \Idea\Record\User\Sql();
+	print_r($user_record);
 	// return View::make('empty');
 });
 

@@ -1,6 +1,9 @@
 <?php namespace Idea;
-
-class Model {
+/**
+ * Collection: Similar to table in relational database
+ * Record: Similar to row in relational database
+ */
+class Collection {
 
 	protected static function getImplementationClass()
 	{
@@ -28,11 +31,5 @@ class Model {
 	{
 		$class_name = static::getImplementationClass();
 		return new $class_name();
-	}
-
-	public static function __callStatic($name, $arguments)
-	{
-		$class_name = static::getImplementationClass();
-		forward_static_call_array(array($class_name, $name), $arguments);
 	}
 }
