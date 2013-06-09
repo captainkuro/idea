@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://localhost',
+	'url' => 'http://localhost/idea/back/laravel/public',
 
 	/*
 	|--------------------------------------------------------------------------

@@ -10,6 +10,38 @@
 <body class="antialiased">
 
   <script type="text/x-handlebars">
+    {{#if Idea.CurrentUser.isLoggedIn}}
+      {{view Idea.HeaderHomeView}}
+    {{else}}
+      {{view Idea.HeaderPublicView}}
+    {{/if}}
+    {{view Idea.AlertView}}
+
+    {{outlet}} 
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="header-public">
+    <nav class="top-bar">
+      <ul class="title-area">
+        <!-- Title Area -->
+        <li class="name">
+          <h1>{{#linkTo "index"}}Idea{{/linkTo}}</h1>
+        </li>
+      </ul>
+
+      <section class="top-bar-section">
+        <!-- Right Nav Section -->
+        <ul class="right">
+          <li class="divider hide-for-small"></li>
+          <li>{{#linkTo "register"}}Register{{/linkTo}}</li>
+          <li class="divider hide-for-small"></li>
+          <li>{{#linkTo "login"}}Login{{/linkTo}}</li>
+        </ul>
+      </section>
+    </nav>
+  </script>
+  
+  <script type="text/x-handlebars" data-template-name="header-home">
     <nav class="top-bar">
       <ul class="title-area">
         <!-- Title Area -->
@@ -26,23 +58,64 @@
         </ul>
       </section>
     </nav>
-
-    {{outlet}} 
+  </script>
+  
+  <script type="text/x-handlebars" data-template-name="alert">
+    {{#if alertMessage}}
+      <div data-alert class="alert-box">
+        {{alertMessage}}
+        <a href="#" class="close">&times;</a>
+      </div>
+    {{/if}}
   </script>
 
-  <script type="text/x-handlebars" data-template-name="index">
-    <ul>
-    {{#each item in model}}
-      <li>{{item}}</li>
-    {{/each}}
-    </ul>
+  <script type="text/x-handlebars" data-template-name="register">
+    <form>
+      <div class="row">
+        <div class="small-4">
+          {{view Ember.TextField valueBinding="user.username" placeholder="Choose a username"}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="small-4">
+          {{view Ember.TextField valueBinding="user.password" type="password" placeholder="Choose a password"}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="small-4">
+          {{view Ember.TextField valueBinding="user.name" placeholder="Choose a display name"}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="small-4">
+          <button {{action doRegister}}>Register</button>
+        </div>
+      </div>
+    </form>
   </script>
 
   <script type="text/x-handlebars" data-template-name="login">
-
+    <form>
+      <div class="row">
+        <div class="small-4">
+          {{view Ember.TextField valueBinding="user.username" placeholder="Username"}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="small-4">
+          {{view Ember.TextField valueBinding="user.password" type="password" placeholder="Password"}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="small-4">
+          <button {{action doLogin}}>Login</button>
+        </div>
+      </div>
+    </form>
   </script>
 
   <script type="text/x-handlebars" data-template-name="home">
+    Hello, {{user.name}}
   </script>
 
   <script src="../../common/js/custom.modernizr.js"></script>

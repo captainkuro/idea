@@ -13,5 +13,25 @@
 
 Route::get('/', function()
 {
-	return View::make('hello');
+	$a = new \Idea\Model\User\Sql;
+	print_r($a);
+	$b = \Idea\Model\User::factory();
+	print_r($b);
+	// return View::make('empty');
+});
+
+// APIs
+Route::post('/register', function()
+{
+
+});
+
+Route::post('/login', function()
+{
+
+});
+
+Route::get('/logout', function()
+{
+
 });
